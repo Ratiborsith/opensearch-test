@@ -1,0 +1,41 @@
+services:
+  opensearch-server:
+    image: bitnami/opensearch:latest
+    container_name: opensearch-server
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - palp
+    volumes:
+      - opensearch_data:/bitnami/opensearch
+
+  opensearch-dashboards:
+    image: bitnami/opensearch-dashboards:latest
+    container_name: opensearch-dashboards
+    ports:
+      - "5601:5601"
+    environment:
+      - OPENSEARCH_DASHBOARDS_OPENSEARCH_URL=http://opensearch-server:9200
+    networks:
+      - palp
+    depends_on:
+      - opensearch-server
+
+  logstash:
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:latest
+    container_name: logstash
+    networks:
+      - palp
+    volumes:
+      - /Users/ratiborpoleshko/opensearch-test/logstash/pipeline:/usr/share/logstash/pipeline
+      - /Users/ratiborpoleshko/opensearch-test/logstash/data:/usr/share/logstash/data
+    depends_on:
+      - opensearch-server
+
+volumes:
+  opensearch_data:
+
+networks:
+  palp:
+    driver: bridge
