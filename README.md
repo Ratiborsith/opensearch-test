@@ -58,11 +58,9 @@ docker run -d \
 
 Выбран следующий датасет: https://www.kaggle.com/datasets/sanjeevsahu/web-log-access-dataset
 
-Причина: 
-Пример строки:
+Укажу причину в виде примера строки:
 199.227.6.10 - - [01/Jul/1995:21:57:07 -0400] "GET /... HTTP/1.0" 200 3092
 соответствует структуре CLF: %h %l %u %t "%r" %>s %b.
-Наглядно в Docker Desktop:
  
 
 
